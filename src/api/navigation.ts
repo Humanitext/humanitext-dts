@@ -4,7 +4,7 @@ import { getDocument } from "../utils/xmlParser"; // ユーティリティ関数
 export const navigationRouter = Router();
 
 navigationRouter.get("/", async (req: Request, res: Response) => {
-  const id = req.query.id;
+  const { ref, id } = req.query;
 
   if (!id) {
     res.status(400).json({ error: "id is required" });
@@ -13,11 +13,11 @@ navigationRouter.get("/", async (req: Request, res: Response) => {
 
   const targets: string[] = [];
 
-  if (req.query.ref) {
-    if (Array.isArray(req.query.ref)) {
-      targets.push(...(req.query.ref as string[]));
+  if (ref) {
+    if (Array.isArray(ref)) {
+      targets.push(...(ref as string[]));
     } else {
-      targets.push(req.query.ref as string);
+      targets.push(ref as string);
     }
   }
 
@@ -31,13 +31,13 @@ navigationRouter.get("/", async (req: Request, res: Response) => {
   // querySelectorAllを使って 'seg' タグを取得し、'corresp'属性を返す
   const member = Array.from(xmlDoc.getElementsByTagName("seg"))
     .map((seg) => {
-      const ref = seg.getAttribute("corresp");
+      const corresp = seg.getAttribute("corresp");
 
-      if (ref === null) {
+      if (corresp === null) {
         return;
       }
 
-      if (targets.length === 0 || targets.includes(ref)) {
+      if (targets.length === 0 || targets.includes(corresp)) {
         return {
           ref: ref,
         };

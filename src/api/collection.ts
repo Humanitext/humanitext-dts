@@ -10,6 +10,8 @@ export const collectionRouter = Router();
 collectionRouter.get("/", async (req: Request, res: Response) => {
   const url = "https://genji.dl.itc.u-tokyo.ac.jp/data/info.json";
 
+  const { id } = req.query;
+
   try {
     const response = await axios.get(url);
     const data = response.data;
@@ -58,7 +60,7 @@ collectionRouter.get("/", async (req: Request, res: Response) => {
       }
     }
 
-    if (req.query.id === COLLECTION_ID) {
+    if (id === COLLECTION_ID) {
       res.json({
         totalItems: data.length,
         member: members,
@@ -70,7 +72,7 @@ collectionRouter.get("/", async (req: Request, res: Response) => {
           "@vocab": "https://www.w3.org/ns/hydra/core#",
         },
       });
-    } else if (!req.query.id) {
+    } else if (!id) {
       res.json({
         totalItems: 1,
         member: [
