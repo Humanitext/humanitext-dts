@@ -10,6 +10,13 @@
         {
             "src": "/api/dts/(.*)",
             "dest": "/src/index.ts"
+        },
+        {
+            "src": "/",
+            "status": 308,
+            "headers": {
+                "Location": "/api/dts"
+            }
         }
     ]
 }
