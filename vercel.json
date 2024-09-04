@@ -6,11 +6,10 @@
             "use": "@vercel/node"
         }
     ],
-    "redirects": [
+    "routes": [
         {
-            "source": "/",
-            "destination": "/api/dts",
-            "permanent": true
+            "src": "/api/dts/(.*)",
+            "dest": "/src/index.ts"
         }
     ]
 }
