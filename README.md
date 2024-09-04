@@ -1,6 +1,6 @@
 # dts-typescript
 
-a Distributed Text Services (DTS) API for the TEI/XML files available in the Kouigenji Monogatari Text DB
+Distributed Text Services (DTS) API for the TEI/XML files available in the Kouigenji Monogatari Text DB
 
 ## 🌐 Website
 
