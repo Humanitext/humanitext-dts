@@ -79,9 +79,11 @@ collectionRouter.get("/", async (req: Request, res: Response) => {
             "@type": "Collection",
             totalItems: members.length,
             title: COLLECTION_TITLE,
+            collection: `/api/dts/collections?id=${COLLECTION_ID}{&ref}`,
           },
         ],
         title: "None",
+
         "@id": "default",
         "@type": "Collection",
         "@context": {
