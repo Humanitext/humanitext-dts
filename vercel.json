@@ -6,17 +6,17 @@
             "use": "@vercel/node"
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api/dts/(.*)",
-            "dest": "/src/index.ts"
-        },
+            "source": "/api/dts/(.*)",
+            "destination": "/src/index.ts"
+        }
+    ],
+    "redirects": [
         {
-            "src": "/",
-            "status": 308,
-            "headers": {
-                "Location": "/api/dts"
-            }
+            "source": "/",
+            "destination": "/api/dts",
+            "permanent": true
         }
     ]
 }
