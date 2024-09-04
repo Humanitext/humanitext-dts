@@ -3,7 +3,7 @@ import { Router, Request, Response } from "express";
 import axios from "axios";
 
 const COLLECTION_TITLE = "校異源氏物語";
-const COLLECTION_ID = "kouigenjimonogatari";
+const COLLECTION_ID = "urn:kouigenjimonogatari";
 
 export const collectionRouter = Router();
 
