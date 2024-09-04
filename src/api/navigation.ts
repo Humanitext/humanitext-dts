@@ -39,7 +39,7 @@ navigationRouter.get("/", async (req: Request, res: Response) => {
 
       if (targets.length === 0 || targets.includes(corresp)) {
         return {
-          ref: ref,
+          ref: corresp,
         };
       }
     })
