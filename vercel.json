@@ -11,5 +11,12 @@
             "src": "/api/dts/(.*)",
             "dest": "/src/index.ts"
         }
+    ],
+    "redirects": [
+        {
+            "source": "/",
+            "destination": "/api/dts",
+            "permanent": true
+        }
     ]
 }
