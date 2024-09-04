@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
 
 import axios from "axios";
-import { parseStringPromise } from "xml2js";
 import { DOMParser } from "xmldom";
+
+const COLLECTION_TITLE = "校異源氏物語";
+const COLLECTION_ID = "kouigenjimonogatari";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,80 +26,81 @@ app.get("/api/dts", (req: Request, res: Response) => {
   });
 });
 
-app.get("/api/dts/collections", (req: Request, res: Response) => {
-  if (req.query.id === "kouigenjimonogatari") {
-    res.json({
-      totalItems: 54,
-      member: [
-        {
-          totalItems: 0,
-          "dts:citeStructure": {
-            "dts:citeType": "line",
-          },
-          "dts:extensions": {
-            "cts:label": [
-              {
-                "@value": "桐壺",
-                "@language": "jpn",
-              },
-            ],
-            "ns2:language": "jpn",
-            "ns1:prefLabel": [
-              {
-                "@value": "桐壺",
-                "@language": "jpn",
-              },
-            ],
-            "cts:description": [
-              {
-                "@value": "桐壺",
-                "@language": "jpn",
-              },
-            ],
-          },
-          "dts:passage": "/api/dts/document?id=kouigenjimonogatari.1",
-          title: "Carmina",
-          "@id": "kouigenjimonogatari.1",
-          "@type": "Resource",
-          "dts:references": "/api/dts/navigation?id=kouigenjimonogatari.1",
-          "dts:citeDepth": 1,
+app.get("/api/dts/collections", async (req: Request, res: Response) => {
+  if (req.query.id === COLLECTION_ID) {
+    const url = "https://genji.dl.itc.u-tokyo.ac.jp/data/info.json";
+
+    try {
+      const response = await axios.get(url);
+      const data = response.data;
+
+      const members: any = [];
+
+      for (const selection of data.selections) {
+        for (const item of selection.members) {
+          const vol = item.metadata.find((m: any) => m.label === "vol").value;
+
+          const memberId = `${COLLECTION_ID}.${vol}`;
+
+          members.push({
+            totalItems: 0,
+            "dts:citeStructure": {
+              "dts:citeType": "line",
+            },
+            "dts:extensions": {
+              "cts:label": [
+                {
+                  "@value": item.label,
+                  "@language": "jpn",
+                },
+              ],
+              "ns2:language": "jpn",
+              "ns1:prefLabel": [
+                {
+                  "@value": item.label,
+                  "@language": "jpn",
+                },
+              ],
+              "cts:description": [
+                {
+                  "@value": item.label,
+                  "@language": "jpn",
+                },
+              ],
+            },
+            "dts:passage": `/api/dts/document?id=${memberId}`,
+            title: item.label,
+            "@id": memberId,
+            "@type": "Resource",
+            "dts:references": `/api/dts/navigation?id=${memberId}`,
+            "dts:citeDepth": 1,
+          });
+        }
+      }
+
+      res.json({
+        totalItems: data.length,
+        member: members,
+        title: COLLECTION_TITLE,
+        "@id": COLLECTION_ID,
+        "@type": "Collection",
+        "@context": {
+          dts: "https://w3id.org/dts/api#",
+          "@vocab": "https://www.w3.org/ns/hydra/core#",
         },
-      ],
-      title: "校異源氏物語",
-      "@id": "kouigenjimonogatari",
-      "@type": "Collection",
-      "@context": {
-        dts: "https://w3id.org/dts/api#",
-        cts: "http://chs.harvard.edu/xmlns/cts/",
-        ns1: "http://www.w3.org/2004/02/skos/core#",
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        ns2: "http://purl.org/dc/elements/1.1/",
-      },
-      "dts:extensions": {
-        "cts:title": [
-          {
-            "@value": "校異源氏物語",
-            "@language": "jpn",
-          },
-        ],
-        "ns2:language": "jpn",
-        "ns1:prefLabel": [
-          {
-            "@value": "校異源氏物語",
-            "@language": "jpn",
-          },
-        ],
-      },
-    });
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to load or parse JSON" });
+    }
   } else {
     res.json({
       totalItems: 1,
       member: [
         {
-          "@id": "kouigenjimonogatari",
+          "@id": COLLECTION_ID,
           "@type": "Collection",
           totalItems: 54,
-          title: "校異源氏物語",
+          title: COLLECTION_TITLE,
         },
       ],
       title: "None",
