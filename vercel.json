@@ -15,7 +15,7 @@
     "redirects": [
         {
             "source": "/",
-            "destination": "/api/dts",
+            "destination": "/api/dts/",
             "permanent": true
         }
     ]
