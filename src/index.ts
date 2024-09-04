@@ -1,5 +1,9 @@
 import express, { Request, Response } from "express";
 
+import axios from "axios";
+import { parseStringPromise } from "xml2js";
+import { DOMParser } from "xmldom";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -107,19 +111,81 @@ app.get("/api/dts/collections", (req: Request, res: Response) => {
   }
 });
 
-app.get("/api/dts/navigation", (req: Request, res: Response) => {
-  // ナビゲーション情報を返す
-  res.json({
-    "@id": "/api/dts/navigation",
-    "@type": "Navigation",
-    dtsVersion: "1-alpha",
-    passage: "/api/dts/document",
-    resource: {
-      "@id": "urn:sample:document",
-      "@type": "Resource",
-      citationTrees: [],
-    },
-  });
+app.get("/api/dts/navigation", async (req: Request, res: Response) => {
+  const id = req.query.id;
+
+  if (!id) {
+    res.status(400).json({ error: "id is required" });
+    return;
+  }
+
+  const targets: string[] = [];
+
+  if (req.query.ref) {
+    if (Array.isArray(req.query.ref)) {
+      targets.push(...(req.query.ref as string[]));
+    } else {
+      targets.push(req.query.ref as string);
+    }
+  }
+
+  const vol = String(id).split(".")[1];
+
+  const url = `https://kouigenjimonogatari.github.io/xml/lw/${vol.padStart(
+    2,
+    "0"
+  )}.xml`;
+
+  try {
+    // XMLファイルを取得
+    const response = await axios.get(url);
+    const xmlData = response.data;
+
+    // DOMParserを使ってXMLをパース
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+
+    // querySelectorAllを使って 'seg' タグを取得し、'corresp'属性を返す
+    const member = Array.from(xmlDoc.getElementsByTagName("seg"))
+      .map((seg) => {
+        const ref = seg.getAttribute("corresp");
+
+        if (ref === null) {
+          return;
+        }
+
+        if (targets.length === 0 || targets.includes(ref)) {
+          return {
+            ref: ref,
+          };
+        }
+      })
+      .filter((m) => m !== undefined);
+
+    // const member: any = [];
+
+    // パースされたデータを処理（例: ナビゲーションデータを作成）
+    const navigationData = {
+      passage: `/api/dts/document?id=${id}{&ref}`,
+      level: 1,
+      citeType: "line",
+      "@id": `/api/dts/navigation?level=1&id=${id}${
+        targets.length > 0 ? `&ref=${targets.join(",")}` : ""
+      }`,
+      citeDepth: 1,
+      "@context": {
+        hydra: "https://www.w3.org/ns/hydra/core#",
+        "@vocab": "https://w3id.org/dts/api#",
+      },
+      "hydra:member": member,
+    };
+
+    // ナビゲーション情報を返す
+    res.json(navigationData);
+  } catch (error) {
+    // エラーハンドリング
+    res.status(500).json({ error: "Failed to load or parse XML" });
+  }
 });
 
 app.get("/api/dts/document", (req: Request, res: Response) => {
