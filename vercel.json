@@ -6,12 +6,6 @@
             "use": "@vercel/node"
         }
     ],
-    "routes": [
-        {
-            "src": "/api/dts/(.*)",
-            "dest": "/src/index.ts"
-        }
-    ],
     "redirects": [
         {
             "source": "/",
