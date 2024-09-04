@@ -9,11 +9,11 @@ const COLLECTION_ID = "kouigenjimonogatari";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", (res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.redirect("/api/dts");
 });
 
-app.get("/api/dts", (res: Response) => {
+app.get("/api/dts", (req: Request, res: Response) => {
   res.json({
     navigation: "/api/dts/navigation",
     "@id": "/api/dts",
