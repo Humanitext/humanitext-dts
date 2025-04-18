@@ -18,7 +18,7 @@ collectionRouter.get("/", async (req: Request, res: Response) => {
     const data = response.data;
 
     const COLLECTION_TITLE = "校異源氏物語";
-    const COLLECTION_ID = "urn:Aristotle.";
+    const COLLECTION_ID = "urn:kouigenjimonogatari.";
 
     const members: any = [];
 

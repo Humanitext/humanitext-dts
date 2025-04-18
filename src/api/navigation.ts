@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { getDocument } from "../utils/xmlParser"; // ユーティリティ関数として外部ファイルに分離
+//import { getDocument } from "../utils/localXmlParser"; // ユーティリティ関数として外部ファイルに分離
 
 export const navigationRouter = Router();
 
@@ -29,9 +30,9 @@ navigationRouter.get("/", async (req: Request, res: Response) => {
   }
 
   // querySelectorAllを使って 'seg' タグを取得し、'corresp'属性を返す
-  const member = Array.from(xmlDoc.getElementsByTagName("seg"))
+  const member = Array.from(xmlDoc.getElementsByTagName("*"))
     .map((seg) => {
-      const corresp = seg.getAttribute("corresp");
+      const corresp = seg.getAttribute("xml:id");
 
       if (corresp === null) {
         return;
