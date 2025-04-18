@@ -9,7 +9,8 @@ import axios from "axios";
 export const collectionRouter = Router();
 
 collectionRouter.get("/", async (req: Request, res: Response) => {
-  const url = "https://raw.githubusercontent.com/Humanitext/dts-data/refs/heads/main/info.json";
+  //const url = "https://raw.githubusercontent.com/Humanitext/humanitext-dts-data/refs/heads/main/info.json";
+  const url = "https://humanitext-dts-data.vercel.app/info.json";
 
   const { id } = req.query;
 

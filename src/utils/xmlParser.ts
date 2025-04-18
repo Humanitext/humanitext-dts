@@ -11,7 +11,8 @@ export const getDocument = async (id: string): Promise<Document | null> => {
     "0"
   )}.xml`;
   */
-  const url = `https://raw.githubusercontent.com/Humanitext/dts-data/refs/heads/main/xml/Aristotle/${work}/${vol}.xml`;
+  //const url = `https://raw.githubusercontent.com/Humanitext/humanitext-dts-data/refs/heads/main/xml/Aristotle/${work}/${vol}.xml`;
+  const url = `https://humanitext-dts-data.vercel.app/xml/Aristotle/${work}/${vol}.xml`;
 
   try {
     const response = await axios.get(url);
