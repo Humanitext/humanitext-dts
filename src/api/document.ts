@@ -1,8 +1,10 @@
-import { Router, Request, Response } from "express";
+import express, { Router, Request, Response } from "express";
 import { getDocument } from "../utils/xmlParser"; // ユーティリティ関数として外部ファイルに分離
 //import { getDocument } from "../utils/localXmlParser"; // ユーティリティ関数として外部ファイルに分離
 
 import { DOMParser, XMLSerializer } from "xmldom";
+
+const app = express();
 
 export const documentRouter = Router();
 
