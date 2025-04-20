@@ -15,11 +15,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/dts", dtsRouter);
-
 app.use("/api/dts/document", documentRouter);
-
 app.use("/api/dts/navigation", navigationRouter);
-
 app.use("/api/dts/collections", collectionRouter);
 
 app.listen(port, () => {
