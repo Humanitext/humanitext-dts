@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true, // この行を追加または true に設定
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true
+  }
+}

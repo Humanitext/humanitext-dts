@@ -1,0 +1,76 @@
+<?xml-model href="tei-epidoc_modified.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<!--<?xml-model href="tei-epidoc.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>-->
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:svg="http://www.w3.org/2000/svg">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>ILN, V, n. 602</title>
+            </titleStmt>
+            <editionStmt>
+                <edition>Digital Edition</edition>
+                <respStmt>
+                    <resp>Editors</resp>
+                    <name>Jun Ogawa</name>
+                </respStmt>
+            </editionStmt>
+            <publicationStmt>
+                <p/>
+            </publicationStmt>
+            <sourceDesc>
+                <ab/>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+
+    <sourceDoc>
+        <surfaceGrp rend="3D">
+            <lighting type="spotLight" position="0 1 1"/>
+            <sceneCamera position="0 0 1"/>
+            <surface xml:id="inscription1" type="3Dobject" position="0 0 0" rotation="0 0 0">
+                <figure>
+                    <graphic type="model" subtype="glb" url="inscription01.glb" scale="1"/>
+                    <graphic type="texture" url="texture.png"></graphic>
+                </figure>
+                <zone xml:id="z01"/>
+                <zone xml:id="z02" 
+                    points="0,1,0 1,0,0 -1,0,0 0,-1,0">
+                    <lb n="1"/>
+                    <expan><abbr>D</abbr><ex>is</ex></expan>
+                    <expan><abbr>M</abbr><ex>anibus</ex></expan>
+                    <zone xml:id="inscription01_ft_l2" points="0,0,0 0.5,0,0 -0.5,0,0 0,-0.5,0">
+                        <lb n="2"/><gap reason="lost" extent="unknown" unit="character"
+                            /><zone>M</zone><zone>I</zone>
+                    </zone>
+                    <zone xml:id="inscription01_ft_l3" points="0,-0.5,0 -0.5,0,0 0.5,0,0 0,0.5,0">
+                        <lb n="3" break="no"/><gap reason="lost" extent="unknown" unit="character"
+                            /><zone>R</zone>
+                    </zone>
+                    <lb n="4" break="no"/>
+                    <gap reason="lost" extent="unknown" unit="character"/> XXXXVII
+                            <expan><abbr>stip</abbr><ex>endiorum</ex></expan>
+                    <lb n="5"/> XXVIII <expan><abbr>Iul</abbr><ex>ius</ex></expan> Martialis <lb
+                        n="6"/>
+                    <expan><abbr>dupl</abbr><ex>icarius</ex></expan> alae
+                            Britan<expan><ex>n</ex><abbr>ic</abbr><ex>a</ex><abbr>e</abbr></expan>
+                    <lb n="7"/> heres Ermius <lb n="8"/>
+                    <expan><abbr>lib</abbr><ex>ertus</ex></expan> eius 
+                </zone>
+            </surface>
+        </surfaceGrp>
+    </sourceDoc>
+    <!--
+    <text>
+        <body>
+            <div type="edition" xml:space="preserve"><head>Text</head><ab><lb n="1"/>
+                <expan><abbr>D</abbr><ex>is</ex></expan> <expan><abbr>M</abbr><ex>anibus</ex></expan> <lb n="2"/><gap reason="lost" extent="unknown" unit="character"/>MI<lb break="no" n="3"/><gap reason="lost" extent="unknown" unit="character"/>R<lb break="no" n="4"/><gap reason="lost" extent="unknown" unit="character"/> XXXXVII <expan><abbr>stip</abbr><ex>endiorum</ex></expan> <lb n="5"/>XXVIII <expan><abbr>Iul</abbr><ex>ius</ex></expan> Martialis <lb n="6"/><expan><abbr>dupl</abbr><ex>icarius</ex></expan> alae Britan<expan><ex>n</ex><abbr>ic</abbr><ex>a</ex><abbr>e</abbr></expan> <lb n="7"/>heres Ermius <lb n="8"/><expan><abbr>lib</abbr><ex>ertus</ex></expan> eius
+            </ab></div>
+            <div type="commentary">
+                <p/>
+            </div>
+            <div type="bibliography">
+                <listBibl><bibl>AE 1955, 0132.</bibl><bibl/></listBibl>
+            </div>
+        </body>
+    </text>
+    -->
+</TEI>
